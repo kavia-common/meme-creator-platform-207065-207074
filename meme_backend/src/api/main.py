@@ -500,6 +500,41 @@ def _find_upload_file(upload_id: str) -> Optional[Path]:
 @app.get(
     "/",
     tags=["Health"],
+    summary="Service index",
+    description=(
+        "Service landing page (helpful in preview environments). "
+        "Use /docs for Swagger UI and /openapi.json for OpenAPI."
+    ),
+    operation_id="service_index",
+)
+def service_index():
+    """Service landing page.
+
+    Returns:
+        A JSON object describing the service and pointing to key URLs.
+    """
+    return {
+        "message": "Retro Meme Generator API",
+        "docs_url": "/docs",
+        "openapi_url": "/openapi.json",
+        "health_url": "/health",
+        "endpoints": {
+            "GET /templates": "List templates",
+            "POST /upload": "Upload an image (multipart form-data field 'file')",
+            "POST /generate": "Generate meme from template_id or upload_id",
+            "GET /download/{meme_id}": "Download a generated meme",
+            "/static/templates/...": "Template images",
+            "/static/thumbnails/...": "Template thumbnails",
+            "/static/uploads/...": "Uploaded images",
+            "/static/generated/...": "Generated memes",
+        },
+    }
+
+
+# PUBLIC_INTERFACE
+@app.get(
+    "/health",
+    tags=["Health"],
     summary="Health check",
     description="Basic health check endpoint for service monitoring.",
     operation_id="health_check",
