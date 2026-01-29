@@ -1,0 +1,4 @@
+{
+    "command": "pytest",
+    "working_directory": "/home/kavia/workspace/code-generation/meme-creator-platform-207065-207074/meme_backend"
+}
